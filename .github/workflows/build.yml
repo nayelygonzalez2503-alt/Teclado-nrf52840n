@@ -1,4 +1,5 @@
 name: Build ZMK Firmware
+name: Build ZMK Firmware
 
 on:
   push:
@@ -16,6 +17,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Cache west modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.west
+            .west
+          key: ${{ runner.os }}-west-${{ hashFiles('config/west.yml') }}
+
       - name: Initialize West Workspace
         run: |
           west init -l config
@@ -24,7 +33,7 @@ jobs:
 
       - name: Build Firmware
         run: |
-          west build -s zmk/app -b supermini_nrf52840 -- -DSHIELD=teclado -DZMK_CONFIG="$(pwd)/config"
+          west build -s zmk/app -b nice_nano_v2 -- -DSHIELD=teclado -DZMK_CONFIG="$(pwd)/config"
 
       - name: Rename UF2 File
         run: |
