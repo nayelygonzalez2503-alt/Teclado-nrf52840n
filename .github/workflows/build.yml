@@ -5,24 +5,33 @@ on:
     paths:
       - 'config/**'
       - '.github/workflows/build.yml'
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-base:3.5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Cache west modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.west
-            .west
-          key: ${{ runner.os }}-west-${{ hashFiles('config/west.yml') }}
+      - name: Initialize West Workspace
+        run: |
+          west init -l config
+          west update
+          west zephyr-export
 
       - name: Build Firmware
-        uses: zmkfirmware/zmk-build-action@v1
+        run: |
+          west build -s zmk/app -b supermini_nrf52840 -- -DSHIELD=my_keyboard -DZMK_CONFIG="$(pwd)/config"
+
+      - name: Rename UF2 File
+        run: |
+          cp build/zephyr/zmk.uf2 my_keyboard_firmware.uf2
+
+      - name: Upload UF2 Artifact
+        uses: actions/upload-artifact@v4
         with:
-          snippet: studio
+          name: firmware
+          path: my_keyboard_firmware.uf2
