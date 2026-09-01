@@ -1,11 +1,11 @@
 name: Build ZMK Firmware
 
 on:
-  workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/build.yml'
       - 'config/**'
+      - '.github/workflows/build.yml'
+  pull_request:
 
 jobs:
   build:
@@ -19,27 +19,10 @@ jobs:
         with:
           path: |
             ~/.west
-            zmk/
-          key: ${{ runner.os }}-zmk-${{ hashFiles('config/west.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-zmk-
-
-      - name: Setup ZMK Action
-        uses: zmkfirmware/zmk-studio-action@v1
-        continue-on-error: true
+            .west
+          key: ${{ runner.os }}-west-${{ hashFiles('config/west.yml') }}
 
       - name: Build Firmware
-        uses: zmkfirmware/zmk-action-retry@v1
+        uses: zmkfirmware/zmk-build-action@v1
         with:
-          repository: zmkfirmware/zmk
-          ref: main
-          cmake-args: "-DCONFIG_ZMK_STUDIO=y"
-          board: supermini_nrf52840
-          shield: teclado
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: firmware_supermini
-          path: |
-            build/zephyr/zmk.uf2
+          snippet: studio
