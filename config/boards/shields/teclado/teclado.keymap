@@ -7,27 +7,26 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            // Capa 0: Teclas principales
+            // Capa 0: Base
             bindings = <
                 &kp ESC      &kp TAB
                 &kp Q        &kp W        &kp E        &kp R        &kp T        &kp Y        &kp U        &kp I        &kp O        &kp P
                 &kp A        &kp S        &kp D        &kp F        &kp G        &kp H        &kp J        &kp K        &kp L        &kp BSPC
-                &mo 1        &kp Z        &kp X        &kp C        &kp V        &kp B        &kp N        &kp M        &kp ENTER    &kp LSHFT
-                &kp LCTRL    &kp LWIN     &kp LALT                  &kp SPACE                              &kp SEMI                  &kp C_MUTE
+                &mo 1        &kp Z        &kp X        &kp C        &kp V        &kp B        &kp N        &kp M                     &kp ENTER
+                &kp LCTRL    &kp LWIN                  &kp LALT                  &kp SPACE                              &kp SEMI     &kp LSHFT
             >;
 
-            // Control de volumen de la perilla KY-040 (Girar izquierda/derecha)
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
 
         numbers_layer {
-            // Capa 1: Números (Secundario activado con la tecla Mayús/mo 1)
+            // Capa 1: Números (Activada con la tecla 'MAYUSCULA' / mo 1)
             bindings = <
                 &trans       &trans
-                &kp N1       &kp N2       &kp N3       &kp N4       &kp N5       &kp N6       &kp N7       &kp N8       &kp N9       &kp N0
+                &kp N1       &kp N2       &kp N3       &kp N4       &kp N5       &kp N6       &kp N7       &kp N8       &kp N9       &trans
                 &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &kp DEL
-                &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
-                &trans       &trans       &trans                    &trans                                 &trans                    &trans
+                &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans                    &trans
+                &trans       &trans                    &trans                    &trans                                 &trans       &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
