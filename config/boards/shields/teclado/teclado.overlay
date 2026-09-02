@@ -38,13 +38,13 @@
         label = "ENCODER";
         a-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        steps = <80>;
+        steps = <24>;
     };
 
     sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&encoder>;
-        triggers-per-rotation = <20>;
+        triggers-per-rotation = <12>;
     };
 
     default_transform: keymap_transform_0 {
