@@ -35,9 +35,9 @@
 
     encoder: encoder {
         compatible = "alps,ec11";
-        label = "ENCODER";
-        a-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
-        b-gpios = <&gpio0 8 GPIO_ACTIVE_LOW>;
+label = "ENCODER";
+    a-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    b-gpios = <&gpio0 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         steps = <24>;
     };
 
